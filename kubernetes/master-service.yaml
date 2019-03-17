@@ -1,0 +1,23 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: locust-master
+  namespace: locust
+  labels:
+    app: master
+spec:
+  ports:
+    - port: 80
+      targetPort: 8089
+      protocol: TCP
+      name: web
+    - port: 5557
+      targetPort: 5557
+      protocol: TCP
+      name: slave-1
+    - port: 5558
+      targetPort: 5558
+      protocol: TCP
+      name: slave-2
+  selector:
+    app: master

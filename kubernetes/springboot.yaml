@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: springboot
+  namespace: locust
+  labels:
+    app: springboot
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: springboot
+  template:
+    metadata:
+      labels:
+        app: springboot
+    spec:
+      containers:
+      - name: springboot
+        image: timwebster9/springboot-template
+        ports:
+        - containerPort: 4550
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: springboot
+  namespace: locust
+spec:
+  selector:
+    app: springboot
+  ports:
+  - protocol: TCP
+    port: 80
+    targetPort: 4550
