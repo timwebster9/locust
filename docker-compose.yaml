@@ -1,12 +1,37 @@
 version: "2.2"
 
 services:
-  pihole:
-    container_name: locust
+  locust-master:
+    container_name: locust-master
     image: timwebster9/locust
     ports:
       - "8089:8089"
-    command: ["/usr/local/bin/locust", "-f", "/data/locustfile.py", "--host=http://springboot:4550"]
+    command: ["/usr/local/bin/locust", "-f", "/data/locustfile.py", "--master", "--host=http://springboot:4550"]
+    restart: unless-stopped
+  locust-slave-1:
+    container_name: locust-slave-1
+    image: timwebster9/locust
+    command: ["/usr/local/bin/locust", "-f", "/data/locustfile.py", "--slave", "--master-host=locust-master", "--host=http://springboot:4550"]
+    restart: unless-stopped
+  locust-slave-2:
+    container_name: locust-slave-2
+    image: timwebster9/locust
+    command: ["/usr/local/bin/locust", "-f", "/data/locustfile.py", "--slave", "--master-host=locust-master", "--host=http://springboot:4550"]
+    restart: unless-stopped
+  locust-slave-3:
+    container_name: locust-slave-3
+    image: timwebster9/locust
+    command: ["/usr/local/bin/locust", "-f", "/data/locustfile.py", "--slave", "--master-host=locust-master", "--host=http://springboot:4550"]
+    restart: unless-stopped
+  locust-slave-4:
+    container_name: locust-slave-4
+    image: timwebster9/locust
+    command: ["/usr/local/bin/locust", "-f", "/data/locustfile.py", "--slave", "--master-host=locust-master", "--host=http://springboot:4550"]
+    restart: unless-stopped
+  locust-slave-5:
+    container_name: locust-slave-5
+    image: timwebster9/locust
+    command: ["/usr/local/bin/locust", "-f", "/data/locustfile.py", "--slave", "--master-host=locust-master", "--host=http://springboot:4550"]
     restart: unless-stopped
   springboot:
     container_name: springboot
